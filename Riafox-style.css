@@ -1,0 +1,2404 @@
+/* @import url('http://example.com/example_style.css'); */
+
+@import url(//fonts.googleapis.com/css?family=Lato:300,400,700,900);
+
+@font-face {
+    font-family: "entypo-fontello";
+    font-style: normal;
+    font-weight: normal;
+    src: url("//cdn2.hubspot.net/hubfs/538536/fonts/entypo-fontello.eot") format("embedded-opentype"), 
+         url("//cdn2.hubspot.net/hubfs/538536/fonts/entypo-fontello.woff") format("woff"),
+         url("//cdn2.hubspot.net/hubfs/538536/fonts/entypo-fontello.ttf") format("truetype");
+}
+
+/**
+ * CSS @imports must be at the top of the file.      
+ * Add them above this section.                             
+ */
+
+
+
+/* ==========================================================================
+   HS COS Boilerplate v1.5.0                                
+   ========================================================================== */
+
+/* This responsive framework is required for all styles. */
+{% include "hubspot/styles/responsive/required_base.css" %}
+{% include "custom/page/Riafox-May2015-theme/Riafox-May2015-modules.css" %}
+
+/* These includes are optional, but helpful. */
+{% include "hubspot/styles/patches/recommended.css" %} 
+
+
+
+
+
+/* ==========================================================================
+
+   Index:         
+
+  1. BASE STYLES   
+    - Variables
+    - Macros
+    - Base
+    - Typography
+
+  2. COS STRUCTURE
+    - Structure
+    - Header
+    - Content
+    - Footer
+
+  3. MAIN NAVIGATION
+    - Custom Menu Primary
+    - Mobile Menu
+
+  4. TEMPLATE MODULE CLASSES
+    - Common Template Classes
+    - Site Pages
+    - Landing Pages
+    - System Pages
+
+  5. COS COMPONENTS
+    - Blog
+    - Forms
+    - Buttons
+
+  6. MISCELLANOUS
+
+  7. MOBILE MEDIA QUERIES
+
+   ========================================================================== */
+
+
+
+
+
+
+
+
+/* ==========================================================================
+
+
+   1. BASE STYLES                                             
+
+
+   ========================================================================== */
+
+
+
+
+
+/* ==========================================================================
+   Variables                                               
+   ========================================================================== */
+
+
+/**
+ * Find the most consistently used font styles, colors, and container widths 
+ * for your site and assign them to the jinja variables below for easy use 
+ * and reference. 
+ *
+ * Apply the variable as shown below.  Ignore the jingja comment tags.
+ *
+ * {#  property: {{ variableName }};  #}
+ */
+
+/* Colors */
+{% set baseColor      = "#444" %}    /* {# Dark Gray  |  Used on 'body' in 'Base'  |  Ex. "color: {{ baseColor }};" #} */
+{% set linkColor      = "#f6963d" %}    /* {# Gray  |  Used on global anchors in 'Base'  |  Ex. "color: {{ linkColor }};" #} */
+{% set linkHover      = "#f6963d" %}    /* {# Black  |  Used on global anchors in 'Base'  |  Ex. "color: {{ linkHover }};" #} */
+{% set accentColor1   = "#666" %}    /* {# Medium Gray  |  Ex. "color: {{ accentColor1 }};" #} */
+{% set accentColor2   = "#ccc" %}    /* {# Light Gray  |  Ex. "color: {{ accentColor2 }};" #} */
+{% set accentColor3   = "#ddd" %}    /* {# Lightest Gray  |  Ex. "color: {{ accentColor3 }};" #} */
+
+/* Typography */
+{% set baseFontFamily    = "'Lato', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif" %}            /* {# Used on 'body' in 'Base'  |  Ex. "font-family: {{ baseFontFamily }};" #} */
+{% set baseFontSize      = "14px" %}                         /* {# Used on 'body' in 'Base'  |  Ex. "font-size: {{ baseFontSize }};" #} */
+{% set baseLineHeight    = "1.65em" %}                          /* {# Used on 'body' in 'Base'  |  Ex. "line-height: {{ baseLineHeight }};" #} */
+{% set webFont1          = "Helvetica, Arial, Sans-serif" %} /* {# Ex. "font-family: {{ webFont1 }};" #} */
+
+/* Containers */
+{% set maxWidth = "1100px" %} /* Used on '.page-center' in 'Base' and in the 'Portrait tablet to landscape and desktop' media query */
+
+
+
+
+/* ==========================================================================
+   Macros                                                  
+   ========================================================================== */
+
+
+/** 
+  * Create jinja macros for CSS3 properties that need browser prefixes.
+  *
+  * Apply the style as shown below on it's own CSS property line.  
+  * Ignore the jinja comment tags. 
+  *
+  * {#  {{ variableName("values") }}  #}
+  */
+
+{% macro transition(value) -%} 
+  -webkit-transition: {{ value }};
+  -moz-transition: {{ value }};
+  -o-transition: {{ value }};
+  -ms-transition: {{ value }};
+  transition: {{ value }};
+{%- endmacro %} 
+
+{% macro borderRadius(value) -%} 
+   -webkit-border-radius: {{ value }};
+   -moz-border-radius: {{ value }};
+   -o-border-radius: {{ value }};
+   -ms-border-radius: {{ value }};
+   border-radius: {{ value }};
+{%- endmacro %}
+
+{% macro boxShadow(value) -%} 
+   -webkit-box-shadow: {{ value }};
+   -moz-box-shadow: {{ value }};
+   -o-box-shadow: {{ value }};
+   -ms-box-shadow: {{ value }};
+   box-shadow: {{ value }};
+{%- endmacro %}
+
+/** 
+  * Example of how to apply the above macro (ignore the jinja comment tags):
+  *
+  * a {
+  *   color: red;
+  *   font-size: 12px;
+  *   {#  {{ transition("all .2s linear") }}  #} 
+  * }
+  */
+
+
+
+
+/* ==========================================================================
+   Base                                                    
+   ========================================================================== */
+
+
+/** 
+ * Box Sizing
+ * 
+ * Applies a natural box layout model to all elements so that width and padding 
+ * are essentially combined, making responsive styles easier to manage.
+ */
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Website background color and default font styles */
+body {
+  background: #fff;
+  color: {{ baseColor }};
+  font-family: {{ baseFontFamily }};
+  font-size: {{ baseFontSize }};
+  line-height: {{ baseLineHeight }};
+}
+
+/**
+ * Page Center
+ *
+ * Apply .page-center to full-width modules.
+ */
+
+.container-fluid .row-fluid .page-center {
+  float: none;
+  max-width: {{ maxWidth }};
+  margin: 0 auto;
+}
+
+a { 
+    color: {{ linkColor }}; 
+    text-decoration: none;
+}
+a:hover, a:focus { 
+    color: {{ linkHover }}; 
+    text-decoration: underline;
+}
+
+hr {
+  color: #ccc;
+  background-color: #ccc;
+  height: 1px;
+  border: none;
+}
+
+/* Highlighted Text */
+::-moz-selection {
+  color: #fff;
+  background: #f6963d;
+  text-shadow: none;
+}
+::selection {
+  color: #fff;
+  background: #f6963d;  
+  text-shadow: none;
+}
+
+/* Corrects width issues in table elements created via the wysiwyg editor */
+table tr td img {
+  max-width: initial;
+}
+
+
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+
+/* Basic text */
+p {
+    margin: 0.85em 0;
+}
+small {}
+strong {}
+em {}
+cite {}
+code {}
+pre {}
+
+sup, sub {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #2b2b2b;
+    font-family: "Lato", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {}
+
+h1 {
+    font-family: "Francois One",'Lato', Verdana, Helvetica, Arial, sans-serif;
+    font-size: 36px;
+    line-height: 1.1em;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0 0 14px;
+}
+h2 {
+    font-family: "Lato","HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 28px;
+    line-height: 1.1em;
+    letter-spacing: 1px;
+    margin: 0 0 10px;
+}
+h3 {
+    font-family: "Lato", Verdana, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.1em;
+    margin: 0 0 8px;
+}
+h4 {
+    color: #2b2b2b;
+    font-family: "Francois One", "Lato", Verdana, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.1em;
+    margin: 0 0 4px;
+}
+h5 {
+    font-size: 16px;
+    line-height: 1.1em;
+    text-transform: none;
+    margin:0 0  10px;
+}
+h6 {
+    font-size: 14px;
+    line-height: 1.1em;
+    text-transform: none;
+    margin:0 0  10px;
+}
+
+/* Lists */
+ul, ol {}
+ul ul, ul ol, ol ol, ol ul {}
+li {}
+
+ul.unstyled, ol.unstyled {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Quotes */
+blockquote {}
+blockquote p {}
+blockquote small {}
+blockquote small:before {}
+
+q:before, q:after, blockquote:before, blockquote:after {}
+
+
+
+
+
+
+
+
+/* ==========================================================================
+
+
+   2. COS STRUCTURE                                            
+
+
+   ========================================================================== */
+
+
+
+
+
+/* ==========================================================================
+   Structure                                               
+   ========================================================================== */
+
+
+/* The outer wrappers of your website */
+.header-container-wrapper, 
+.body-container-wrapper, 
+.footer-container-wrapper {}
+
+/* The inner wrappers of your website */
+.header-container, 
+.body-container, 
+.footer-container {}
+
+
+
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+
+.header-container-wrapper {}
+.header-container {}
+
+/* Logo styling */
+.header-container .hs_cos_wrapper_type_logo {}
+.header-container .hs_cos_wrapper_type_logo a {}
+.header-container .hs_cos_wrapper_type_logo a img {}
+
+.header-container .widget-type-global_group {
+    min-height: 81px;
+}
+.custom-header-container.widget-span{
+    width:100%;
+}
+.custom-header-container{
+    position: fixed;
+    left:0;
+    right:0;
+    background: #2B2B2B;
+    border-top: 1px solid transparent;
+    z-index: 501;
+}
+.custom-header-container .page-center{
+    line-height: 80px;
+    padding: 0 50px;
+}
+.custom-logo a {
+    display: block;
+}
+.custom-logo a img {
+    margin-top: 4px;
+    vertical-align: top;
+}
+
+/* ==========================================================================
+   Content                                                 
+   ========================================================================== */
+
+
+.body-container-wrapper {}
+.body-container {}
+
+.body-container .page-center{
+    color:#999999;
+    padding: 50px;
+}
+.body-container ul, 
+.body-container ol {
+    margin-bottom: 20px;
+    margin-left: 7px;
+    padding:0;
+}
+.body-container li {
+    margin-left: 1em;
+    padding: 3px 0;
+}
+
+/* Unique Pages
+   ========================================================================== */
+
+/* Homepage */
+
+/* Contact Us */
+
+/* About Us */
+
+
+/* Modular & Reusable Components
+   ========================================================================== */
+
+/* Callouts */
+
+/* Social Media Custom Icons */
+
+/* Additional Menus aside from the Main Nav */
+
+
+
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+
+.footer-container-wrapper {}
+.footer-container {}
+
+.footer-container .page-center{
+    padding-left:50px;
+    padding-right: 50px;
+}
+.custom-footer-container{
+    background-color: #2b2b2b;
+    color: #ffffff;
+}
+.custom-footer-container h3.form-title{
+    font-family: arial,sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: normal;
+    white-space: normal;
+    color: #959595;
+    margin:0;
+    text-transform: none;
+    text-align: center;
+}
+.custom-footer-top-container {
+    padding: 15px 0 30px;
+    border-top: 1px solid #2b2b2b;
+}
+.custom-footer-top-container .footer-block-widget{
+    margin-top:30px;
+    margin-bottom: 30px;
+}
+.custom-twitter-widget .twitter-timeline.twitter-timeline-rendered{
+    max-width: 293px !important;
+    width: 100% !important;
+}
+
+.custom-footer-bottom-container .page-center{
+    padding-top: 15px;
+    padding-bottom:15px;
+}
+
+.custom-copyright{
+    color: #ffffff;
+    font-size:11px;
+    line-height:23.1px;
+}
+.custom-footer-social-icons ul{
+    float: right;
+    margin: -10px 0 0 0;
+    list-style:none;
+    padding:0;
+    font-size:11px;
+}
+.custom-footer-social-icons {
+    float:right;
+    width:auto;
+}
+.custom-footer-social-icons ul li{
+    float: left;
+}
+.custom-footer-social-icons ul li a{
+    float: left;
+    line-height: 30px;
+    outline:  none;
+    color: #959595;
+    top: 5px;
+    position: relative;
+    text-align: center;
+    width: 30px;
+    {{ borderRadius("300px") }}
+    {{ transition("all 0.2s ease-in-out 0s") }}
+    text-decoration:none;
+}
+.custom-footer-social-icons ul li a:hover{
+    color: #fff;
+}
+.custom-footer-social-icons ul li a.icon-facebook:hover{
+    background-color:#46D4FE;
+}
+.custom-footer-social-icons ul li a.icon-twitter:hover{
+    background-color: #37589B;
+}
+.custom-footer-social-icons ul li a.icon-linkedin:hover{
+    background-color: #A67658;
+}
+.custom-footer-social-icons ul li a.icon-gplus:hover{
+    background-color:#419CCA;
+}
+.custom-footer-social-icons ul li a.icon-instagram:hover{
+    background-color:#CD5646;
+}
+
+.custom-footer-social-icons ul li a:before{
+    font-family: "entypo-fontello";
+    font-weight: normal;
+}
+.custom-footer-social-icons ul li a.icon-facebook:before{
+    content:"";
+}
+.custom-footer-social-icons ul li a.icon-twitter:before{
+    content:"";
+}
+.custom-footer-social-icons ul li a.icon-linkedin:before{
+    content:"";
+}
+.custom-footer-social-icons ul li a.icon-gplus:before{
+    content:"";
+}
+.custom-footer-social-icons ul li a.icon-instagram:before{
+    content:"";
+}
+
+.custom-footer-news-feed h3{
+    display:none;
+}
+.custom-footer-news-feed .hs-rss-item{
+    clear: both;
+    display: block;
+    font-size: 11px;
+    line-height: 18px;
+    margin: 0;
+    overflow: hidden;
+    padding: 7px 0 3px;
+    position: relative;
+}
+.custom-footer-news-feed .hs-rss-item-text,
+.custom-footer-news-feed .hs-rss-item-text .hs-rss-title{
+    color: #959595;
+    display: block;
+    font-weight: bold;
+    margin-top: 2px;
+    padding:0;
+    overflow: hidden;
+}
+.custom-footer-news-feed .hs-rss-byline{
+    clear: both;
+    display: block;
+    font-size: 10px;
+    font-weight: normal;
+}
+.custom-footer-news-feed .hs-rss-item.hs-with-featured-image .hs-rss-item-image-wrapper{
+    border-color: #2b2b2b;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    float: left;
+    height: 36px;
+    margin-right: 9px;
+    margin-top: 4px;
+    padding: 3px;
+    width: 36px;
+}
+.custom-footer-news-feed .hs-rss-item.hs-with-featured-image .hs-rss-item-image-wrapper .hs-rss-featured-image{
+    border: medium none;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    height: 28px;
+    width: 28px;
+}
+.footer-top-block3 .widget-type-blog_subscribe label{
+    font-family: Arial;
+    font-size: 14px;
+    color: #959595;
+    display:inline-block;
+    margin:0;
+    font-weight: normal;
+}
+.footer-top-block3 .widget-type-blog_subscribe  .hs-button.primary{
+    background-color: #f6963d;
+    border-color: #000000;
+    {{ borderRadius("3px") }}
+    border-style: hidden;
+    border-width: 1px;
+    color: #000000;
+    font-family: Trebuchet MS;
+    font-size: 16px;
+    height: 32px;
+    min-width: 150px;
+    margin:0;
+    padding:0 6px
+}
+.footer-top-block3 .widget-type-blog_subscribe  .hs-input{
+    font-size: 12px;
+    line-height:15px;
+    padding: 2px;
+}
+.footer-top-block3 .widget-type-blog_subscribe .cell-wrapper {
+    margin: 0 auto;
+    max-width: 250px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+.custom-site-review hr{
+    margin: 10px 0 30px;
+}
+.custom-footer-js.widget-span{
+    min-height:0;
+}
+#back-to-top{
+    color: #ffffff;
+    border: 1px solid #2b2b2b;
+    {{ transition("all 0.3s ease-out") }}
+    background-color: #2b2b2b;
+    position: fixed;
+    {{ borderRadius("2px") }}
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-decoration: none;
+    text-align: center;
+    opacity: 0;
+    right: 50px;
+    bottom: 50px;
+    z-index: 1030;
+    visibility: hidden;
+}
+#back-to-top:hover{
+  background-color: #f8f8f8;
+  color: #f6963d;
+  border: 1px solid #e1e1e1;
+}
+#back-to-top.on{
+    opacity: 0.7;
+    visibility: visible;
+}
+#back-to-top:before {
+  font-family: 'entypo-fontello';
+  font-weight: normal;
+  content: "";
+}
+/* ==========================================================================
+
+
+   3. MAIN NAVIGATION                                            
+
+
+   ========================================================================== */
+
+
+
+
+
+/* ==========================================================================
+   Custom Menu Primary
+   ========================================================================== */
+
+
+{% set ulColor       = "transparent" %} /* Set ul background color */
+{% set liColor       = "transparent" %} /* Set li background Color */
+{% set aColor        = "#959595" %} /* Set link Color */
+{% set aColorHover   = "#ffffff" %} /* Set link Hover Color */
+
+/* Parent List */
+.custom-menu-primary .hs-menu-wrapper > ul{ 
+    background:{{ ulColor }};
+    float:right;
+    text-transform: uppercase;
+    display:block;
+}
+.custom-menu-primary .hs-menu-wrapper > ul > li{
+    background:{{ liColor }};
+    line-height: 30px;
+}
+.custom-menu-primary .hs-menu-wrapper > ul > li > a{
+    color:{{ aColor }};
+    font-size: 13px;
+    line-height: 80px;
+    font-weight: 600;
+    padding: 0 13px;
+    text-decoration: none;
+    {{ transition("background-color 0.4s ease-in-out 0s, color 0.4s ease-in-out 0s, border-color 0.8s ease-in-out 0s") }}
+}
+.custom-menu-primary .hs-menu-wrapper > ul > li > a:hover{
+    color:{{ aColorHover }};
+    background: #f6953d;
+}
+
+@media(min-width: 768px){
+    .custom-menu-primary .hs-menu-wrapper > ul > li:first-child > a:hover,
+    .custom-menu-primary .hs-menu-wrapper > ul > li:first-child > ul{
+        background-color: #ae3606;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li:nth-child(2) > a:hover,
+    .custom-menu-primary .hs-menu-wrapper > ul > li:nth-child(2) > ul{
+        background-color: #084858;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li:nth-child(3) > a:hover,
+    .custom-menu-primary .hs-menu-wrapper > ul > li:nth-child(3) > ul{
+        background-color: #178393;
+    }
+    .custom-menu-primary .hs-menu-wrapper.hs-menu-flow-horizontal > ul > li.hs-item-has-children{
+        position: static;
+    }
+}
+/* Child List */
+.custom-menu-primary .hs-menu-wrapper > ul ul{
+    width:100%;
+    background:#F6953D;
+    padding-left: 8%;
+    padding-right: 22%;
+    {{ boxShadow("0 8px 15px rgba(0, 0, 0, 0.1)") }}
+    {{ transition("all 0.4s ease-in-out 0s") }}
+}
+.custom-menu-primary .hs-menu-wrapper > ul ul li{
+    background:{{ liColor }};
+    float: right;
+}
+.custom-menu-primary .hs-menu-wrapper > ul ul li a{
+    color: #f1f1f1;
+    font-size: 12px;
+    line-height: 23px;
+    padding: 8px 15px;
+    text-align: left;
+    text-decoration: none;
+}
+.custom-menu-primary .hs-menu-wrapper > ul ul li a:hover{
+    color: #f1f1f1;
+}
+
+/* Override max width on menu links */
+.custom-menu-primary .hs-menu-wrapper > ul li a, 
+.hs-menu-wrapper.hs-menu-flow-horizontal > ul li.hs-item-has-children ul.hs-menu-children-wrapper li a {
+  overflow: visible !important;
+  max-width: none !important;
+  width: auto !important;
+}
+
+/* Fix menu disappearing on desktop after toggling mobile menu */
+@media screen and (min-width:768px) {
+      .custom-menu-primary .hs-menu-wrapper { 
+          display:block !important;
+      }
+  }
+
+
+
+/* ==========================================================================
+   Mobile Menu - Toggle Side Menu - Right
+   ========================================================================== */
+
+
+/* Variables
+   ========================================================================== */
+
+{% set mobileIconColor      = "#fff" %} /* Set mobile icon color */
+{% set closeIconColor       = "#fff" %} /* Set close icon color */
+{% set menuBg               = "#fff" %} /* Set full menu background color */
+{% set mobileLinkColor      = "#999" %} /* Set link Color */
+{% set mobileLinkColorHover = "#fff" %} /* Set link Hover Color */
+
+
+/* Toggle Button
+   ========================================================================== */
+
+
+.mobile-icon {
+    border: 1px solid transparent;
+    {{ borderRadius("2px") }}
+    color: {{ mobileIconColor }};
+    cursor: pointer;
+    display: none;
+    float: right;
+    font-size: 30px;
+    height: 46px;
+    line-height: 46px;
+    margin-top: -63px;
+    position: relative;
+    right: 0;
+    text-decoration: none;
+    top: 0;
+    width: 46px;
+    z-index: 10000;
+}
+.mobile-icon:hover {
+    text-decoration: none; /* Removes link text underline on button */
+    color: {{ mobileIconColor }};
+}
+
+/* Three line icon */
+.mobile-icon span {
+    margin: 0 auto;
+    position: relative;
+    top: 17px;
+}
+.mobile-icon:before {
+    content: "";
+    font-family: "entypo-fontello";
+    font-weight: normal;
+    position: absolute;
+    right: 11.5px;
+    top: 1px;
+}
+
+/* Close Button
+   ==========================================================================
+*/
+
+.close-icon {
+    cursor: pointer;
+    color: {{ closeIconColor }};;
+    border:1px solid #2b2b2b;
+    border-radius: 2px;
+    background-color: #2b2b2b;
+    font-size: 30px;
+    line-height: 46px;
+    margin-top: -23px;
+    position: absolute;
+    right: 57px;
+    text-decoration: none;
+    top: 40px;
+    z-index: 10000;
+    right: 23px;
+    top: 44px;
+    width:46px !important;
+    height:46px !important;;
+}
+.close-icon:hover{
+    background-color: #2b2b2b;
+    border-color: #2b2b2b;
+    color: {{ closeIconColor }};
+}
+.close-icon:before{
+    content: "";
+    font-family: "entypo-fontello";
+    font-weight: normal;
+    position: absolute;
+    right: 9.5px;
+    top: 1px;
+}
+
+
+/* Menu Styles on Mobile Devices
+   ==========================================================================
+*/
+
+@media (min-width: 768px) {
+
+     /* Will prevent the '100% Height' script for the Main Menu to
+        affect desktop */
+     .custom-menu-primary {
+          height: auto !important;
+     }
+     .close-icon{
+          display:none !important;
+     }
+
+}
+
+@media (max-width: 767px) {
+
+     body, html {
+          height: 100%;
+     }
+
+     /* Show the Mobile and Close Icons */
+     .mobile-icon,
+     .close-icon {
+          display: block !important;
+     }
+
+     /* Container added with js and is required for transforms to work */
+     #site-wrapper{
+        max-width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        position: relative;
+     }
+
+     /* Provide room in header for the toggle button */
+     .header-container-wrapper .page-center{
+        padding-right: 60px;
+     }
+
+     /* Provide spacing for the menu ul */
+     .custom-menu-primary .hs-menu-flow-horizontal > ul {
+         clear: both;
+         padding:89px 0;
+     }
+
+     /* Mobile Nav is HIDDEN By Default */
+     .custom-menu-primary {
+          position: fixed;
+          overflow:auto;
+          width: 100% !important; /* must match the value above in 'left' */
+          z-index: 1000;
+          background: {{ menuBg }};
+          right: -100%;
+          top: 0;
+          -webkit-transform: scale(0.5);
+          -moz-transform: scale(0.5);
+          -ms-transform:scale(0.5);
+          -o-transform: scale(0.5);
+          transform:scale(0.5);
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -ms-backface-visibility: hidden;
+          -o-backface-visibility: hidden;
+          backface-visibility: hidden;
+          right: -100%;
+          transform-origin: 0 0 0;
+     }
+
+     /* Set Link Colors */
+     .custom-menu-primary .hs-menu-wrapper.hs-menu-flow-horizontal>ul li.hs-menu-depth-1 {
+        float: left;
+     }
+     .custom-menu-primary .hs-menu-wrapper > ul ul {
+        background-color: #fff;
+        border-top: 0 none;
+        box-shadow: none;
+        display: block;
+        min-width: 0;
+        padding: 0;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li{
+        background: transparent;
+        line-height: 1.65em;
+        padding: 0 1px;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li:last-child {
+       padding: 0 1px;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li > a {
+        color: {{ mobileLinkColor }};
+        font-size:14px;
+        font-weight: 400;
+        line-height: 1.65em;
+        padding: 13px 28px;
+        position: relative;
+        border-bottom:1px solid #e1e1e1;
+        transition:none;
+        text-transform: none;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li:first-child > a{
+        border-top:1px solid #e1e1e1;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li > a:hover{
+        color: {{ mobileLinkColorHover }};
+        background: #F6963D;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li:last-child > a {
+        border: none;
+        border-radius: 0;
+        padding: 13px 28px;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul li:first-child{
+        padding: 0;
+        border:none;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul > li{
+        display:block;
+        background: none repeat scroll 0 0 transparent;
+        line-height: 1.65em;
+        padding: 0;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul > li:first-child > a {
+        padding: 13px 28px 13px 50px;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul > li > a {
+        padding: 13px 28px 13px 50px;
+        color: {{ mobileLinkColor }};
+        font-size:14px;
+        font-weight: 400;
+        line-height: 1.65em;
+        position: relative;
+        border-bottom:1px solid #e1e1e1;
+        transition:none;
+        text-transform: none;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul li a span{
+        display:none;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul li a:hover{
+        background:#F6963D;
+        color: {{ mobileLinkColorHover }};
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul ul li a:hover u {
+        color: #383838;
+        text-decoration: none;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li > a:before,
+    .custom-menu-primary .hs-menu-wrapper > ul ul > li > a:before{
+        content: "▶";
+        font-family: "entypo-fontello";
+        font-size: 7px;
+        color: #2b2b2b;
+        margin-left: -10px;
+        position: absolute;
+        top: 13px;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li > a:hover:before,
+    .custom-menu-primary .hs-menu-wrapper > ul ul > li > a:hover:before{
+        color: {{ mobileLinkColorHover }};
+    }
+     /* All Main Containers Display FULL Width By Default */
+     .custom-menu-primary {
+          -webkit-transition: -webkit-transform 500ms ease;
+          -moz-transition: -moz-transform 500ms ease;
+          -o-transition: -o-transform 500ms ease;
+          transition: transform 500ms ease;
+          z-index: 999999;
+     }
+
+     /* All Main Containers Display PARTIAL Width On Icon Click */
+     .show-mobile-nav .custom-menu-primary {
+          -webkit-transform:translate3d(-100%, 0px, 0px);
+          -moz-transform:translate3d(-100%, 0px, 0px);
+          -ms-transform:translate3d(-100%, 0px, 0px);
+          -o-transform: translate3d(-100%, 0px, 0px);
+           transform:translate3d(-100%, 0px, 0px);
+     }
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+
+
+   4. TEMPLATE MODULE SELECTORS                                         
+
+
+   ========================================================================== */
+
+
+
+
+
+/* Common Template Selectors                                             
+   ========================================================================== */
+
+body.one-column {}
+body.two-column {}
+body.three-column {}
+.content-wrapper {}
+.main-content {}
+.sidebar{}
+.sidebar.right{}
+.sidebar.left{}
+
+/* Common One Column Selectors */
+body.site-page.one-column, 
+body.landing-page.one-column, 
+body.error-template.one-column, 
+body.password-template.one-column, 
+body.subscription-template.one-column {}
+
+body.site-page.one-column .main-content, 
+body.landing-page.one-column .main-content, 
+body.error-template .main-content, 
+body.password-template .main-content, 
+body.subscription-template .main-content {}
+
+/* Common Two Column Selectors */
+body.site-page.two-column, 
+body.landing-page.two-column, 
+body.blog {}  
+
+body.site-page.two-column .main-content, 
+body.landing-page.two-column .main-content, 
+body.blog .blog-content {}
+
+/* Common Three Column Selectors */
+body.site-page.three-column, 
+body.landing-page.three-column {}
+
+body.site-page.three-column .main-content, 
+body.landing-page.three-column .main-content {}
+
+
+/* Site Pages                                            
+   ========================================================================== */
+
+/* One Column Template */
+body.site-page.one-column {}
+body.site-page.one-column .content-wrapper {}
+body.site-page.one-column .main-content {}
+
+/* Two Column Template */
+body.site-page.two-column {}
+body.site-page.two-column .content-wrapper {}
+body.site-page.two-column .main-content {}
+body.site-page.two-column .sidebar.right {}
+
+/* Three Column Template */
+body.site-page.three-column {}
+body.site-page.three-column .content-wrapper {}
+body.site-page.three-column .main-content {}
+
+
+/* Landing Pages                                           
+   ========================================================================== */
+
+/* One Column Template */
+body.landing-page.one-column {}
+body.landing-page.one-column .content-wrapper {}
+body.landing-page.one-column .main-content {}
+
+/* Two Column Template */
+body.landing-page.two-column {}
+body.landing-page.two-column .content-wrapper {}
+body.landing-page.two-column .main-content {}
+body.landing-page.two-column .sidebar.right {}
+
+/* Three Column Template */
+body.landing-page.three-column {}
+body.landing-page.three-column .content-wrapper {}
+body.landing-page.three-column .main-content {}
+
+
+/* System Pages                                          
+   ========================================================================== */
+
+/* Error Templates 404, 500 */
+body.error-template.one-column {}
+body.error-template.one-column .content-wrapper {}
+body.error-template.one-column .main-content {}
+
+/* Password template */
+body.password-template.one-column {}
+body.password-template.one-column .content-wrapper {}
+body.password-template.one-column .main-content {}
+
+/* Email Subscribition templates */
+body.subscription-template.one-column {}
+body.subscription-template.one-column .content-wrapper {}
+body.subscription-template.one-column .main-content {}
+
+
+
+
+
+
+
+
+/* ==========================================================================
+
+
+   5. COS COMPONENTS                                        
+
+
+   ========================================================================== */
+
+
+
+
+
+/* ==========================================================================
+   Blog                                         
+   ========================================================================== */
+
+
+/* Blog Post and Listing Body Class */
+body.blog {}
+
+/* Blog Post */
+body.hs-blog-post {}
+
+/* Blog Listing */
+body.hs-blog-listing {}
+
+/* Blog Columns Wrapper */
+.blog .content-wrapper {    
+    padding: 0 50px;
+}
+
+
+/* Blog Content Column
+   ========================================================================== */
+
+.blog .blog-content {
+    width: 73%;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    box-sizing: content-box;
+    min-height: 1px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    z-index: 1;
+    border-right: 1px solid #e1e1e1;
+    margin-right: -1px;
+}
+
+/* Use this to style the main wrapper for the blog listing pages */
+.blog-listing-wrapper {}
+
+/* Use this to style the main wrapper for the blog post pages */
+.blog-post-wrapper {}
+
+/* Blog Title */
+.hs-blog-header h1 {}
+.hs-blog-header h1 a{}
+
+/* Blog Post Title */
+.post-header h1{
+    font-size: 21px;
+    color: #2b2b2b;
+    font-family: "Francois One",‘Lato’,Verdana,Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    line-height: 1.3em;
+    margin: 0 0 14px;
+}
+.post-header h2 {
+    font-family: "Lato","HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 21px;
+    line-height: 1.3em;
+    font-weight: 600;    
+    margin: 0 0 10px;
+    text-transform: none;
+}
+.post-header h2 a,
+.post-header h1 a{
+    color: #2b2b2b;
+    text-decoration: none;
+}
+
+.custom-byline{
+    color: #2b2b2b;
+    display: block;
+    font-size: 12px;
+    position: relative;
+    top: -8px;
+}
+.custom-byline a{
+    color: #2b2b2b;
+}
+.custom-byline a:hover{
+    color: #f6963d;
+}
+.custom-byline #hubspot-topic_data{
+    color: #2b2b2b;
+    display:inline;
+    font-size: 12px;
+    margin:0;
+}
+
+/* Blog Author and Avatar */
+#hubspot-author_data {
+    float:left;
+    margin-right: 50px;
+}
+#hubspot-author_data a.author-link {}
+#hubspot-author_data .hs-author-avatar {
+    max-width: 70px;
+	padding: 10px 10px 10px 0;
+}
+#hubspot-author_data .hs-author-avatar img {
+    {{ borderRadius(")111px") }}
+    display: block;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+#hubspot-author_data .rounded-container{
+    {{ borderRadius("111px") }}
+    background: #2b2b2b;
+    color: #ffffff;
+    float: left;
+    height: 81px;
+    line-height: 81px;
+    text-align: center;
+    width: 81px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+#hubspot-author_data .rounded-container img{
+    {{ borderRadius("111px") }}
+    display: block;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+#hubspot-author_data .rounded-container i:before {
+    font-family: "entypo-fontello";
+    content: "";
+    font-weight: normal;
+    font-style:normal;
+}
+#hubspot-author_data .rounded-container i{
+    bottom: 0;
+    font-size: 23px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
+
+/* Use this to set up different styling for your blog posts */
+.blog-listing-wrapper .post-listing .post-item {
+    position: relative;
+}
+.blog-listing-wrapper .post-listing .post-item .post-body {
+    overflow:hidden;
+    padding-right: 50px;
+}
+.blog-post-wrapper .post-body {
+    overflow:hidden;
+    padding-right: 50px;
+}
+
+.custom-post-divider{
+    clear: both;
+    margin: 0 0 50px;
+    padding: 50px 0 0;
+}
+.custom-author-timeline{
+    border-right: 1px dashed #e1e1e1;
+    height: 100%;
+    left: 40px;
+    position: absolute;
+    top: 0;
+    width: 1px;
+}
+/* Post Featured Image on Listings Page */
+.featured-image-wrapper,
+.banner-image-wrapper{
+    display:block;
+}
+.hs-featured-image-wrapper {
+    display: block;
+    padding: 0 50px 10px 131px;
+}
+.hs-featured-image-wrapper .hs-featured-image-link {
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+.hs-featured-image-wrapper .hs-featured-image-link img.hs-featured-image,
+.hs-featured-image-wrapper .hs-featured-image-link .hs-featured-image img.hs-image-widget{
+    height: auto !important;
+    image-rendering: optimizequality;
+    margin: 0 !important;
+    max-width: 100% !important; 
+    padding: 0 !important;
+    {{ borderRadius("4px") }}
+    display: block;
+    position: relative;
+    z-index: 4;
+    border:0;
+}
+.hs-featured-image {
+    float: none;
+    margin: 0;
+    max-width: 100%;
+}
+.hs-featured-image-wrapper .hs-featured-image-link .image-overlay {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width:100%;
+    {{ transition("opacity 0.4s ease-in-out 0s") }}
+    background: #fff;
+    opacity: 0;
+    height: 100%;
+    z-index: 300;
+}
+.hs-featured-image-wrapper .hs-featured-image-link:hover .image-overlay {
+    opacity: 0.7;
+}
+.hs-featured-image-wrapper .hs-featured-image-link .image-overlay .image-overlay-inside{
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.hs-featured-image-wrapper .hs-featured-image-link:hover .image-overlay .image-overlay-inside{
+    -webkit-animation: avia_pop_small 0.5s 1 cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    animation: avia_pop_small 0.5s 1 cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+.hs-featured-image-wrapper .hs-featured-image-link .image-overlay .image-overlay-inside:before {
+    content: "";
+    font-family: "entypo-fontello";
+    font-size: 18px;
+    font-weight: normal;
+    background-color: #f6963d;
+    color: #ffffff;
+    {{ borderRadius("50px")}}
+    height: 80px;
+    left: 50%;
+    line-height: 80px;
+    margin: -40px 0 0 -40px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 80px;
+    z-index: 500;
+}
+.hs-featured-image-wrapper .hs-featured-image-link .image-overlay .image-overlay-inside.full-screen:before{
+    content: "";        
+}
+@keyframes avia_pop_small {
+    0% {
+        transform: rotate(-175deg) scale(0.2);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Read More Link */
+a.more-link {}
+
+/* Blog Topics List */
+#hubspot-topic_data {
+    display:block;
+    margin:0;
+    color: #2b2b2b;
+    font-size: 12.6px;
+    line-height:23.1px;
+}
+#hubspot-topic_data strong{
+    color: #f6963d;
+}
+#hubspot-topic_data a.topic-link {
+    color: #2b2b2b;
+}
+#hubspot-topic_data a.topic-link:hover{
+    color:#f6963d;
+}
+
+/** 
+ * Blog Social Sharing icons
+ *
+ * Overrides defaults to better align icons and prevent overlapping 
+ */
+
+.hs-blog-social-share {
+    border-bottom: 1px solid #cccccc;
+	border-top: 1px solid #cccccc;
+	height: auto;
+	margin-top: 10px;
+	padding: 10px 0 0;
+}
+.custom-post-social-share .hs-blog-social-share {
+    border-bottom: 0 none;
+    border-top: 0 none;
+    height: auto;
+    margin-top: 0;
+    padding: 0;
+}
+.custom-post-social-share{
+    clear: both;
+    float: left;
+    font-size: 13px;
+    margin-bottom: -50px;
+    margin-top: 30px;
+    padding: 0;
+    width: 100%;
+}
+.custom-post-social-share h5{
+    margin-bottom: 20px;
+}
+.custom-post-social-share .hs-blog-social-share .hs-blog-social-share-list{
+    background: transparent none repeat scroll 0 0;
+    border-radius: 3px;
+    border: 1px solid #e1e1e1;
+    display: table;
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    table-layout: fixed;
+    text-align: center;
+    width: 100%;
+    color: #999999;
+}
+.custom-post-social-share .hs-blog-social-share .hs-blog-social-share-list .hs-blog-social-share-item{
+    display: table-cell;
+    float: none;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0;
+    border-left: 1px solid #e1e1e1;
+    padding: 15px 0;
+    width: 100%;
+}
+.custom-post-social-share .hs-blog-social-share .hs-blog-social-share-list .hs-blog-social-share-item:first-child{
+    border:0;
+}
+/** 
+ * Blog Commments 
+ *
+ * Custom styles are listed below, as the COS does not provide default styles.
+ */
+
+#comments-listing {
+    border: 1px solid #ccc;
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+.comment.depth-0 {
+	border-bottom: 1px solid #000 !important;
+	border-top: medium none !important;
+	margin: 0 10px 10px !important;
+	padding: 0 15px !important;
+}
+.comment-body {
+	border-bottom: medium none;
+	color: {{ baseColor }};
+	display: block;
+	font-family: {{ baseFontFamily }};
+	font-size: {{ baseFontSize }};
+	line-height: {{ baseLineHeight }};
+	padding: 0;
+}
+.comment-reply-to{
+	margin-bottom: 15px;
+}
+.comment-from h4 {
+	margin: 0;
+	padding-top: 15px;
+}
+.comment-date {
+	color: {{ baseColor }} !important;
+	display: block !important;
+	text-align: left;
+}
+.custom_listing_comments {
+	border: 1px solid #E2E2E2;
+	display: block;
+	line-height: 165%;
+	padding: 15px;
+}
+/* Pagination */
+.blog-pagination {
+    padding: 1px 50px 10px 24px;
+}
+.blog-pagination a {
+    color: #2b2b2b;
+    background: #f8f8f8;
+    {{ transition("background 0.15s ease-out 0s") }}
+    font-size: 11px;
+    {{ borderRadius("100px") }}
+    {{ boxShadow("0 0 1px 0 rgba(0, 0, 0, 0.2)") }}
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 3px;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+}
+.blog-pagination a:hover{
+    background: #2b2b2b;
+    color: #ffffff;
+}
+
+.blog-pagination a.previous-posts-link {}
+.blog-pagination a.all-posts-link {}
+.blog-pagination a.next-posts-link {}
+
+.custom-next-prev-post a{
+    background: rgba(0, 0, 0, 0.1);
+    color: #fff;
+    height: 110px;
+    margin-top: -55px;
+    padding: 15px;
+    position: fixed;
+    text-decoration: none;
+    top: 50%;
+    z-index: 501;
+    {{ transition("all 0.3s ease-out 0s") }}
+}
+.custom-next-prev-post a:hover{
+    background: rgba(0, 0, 0, 0.8);
+}
+.custom-next-prev-post a.custom-post-prev{
+    {{ borderRadius("0 2px 2px 0") }}
+}
+.custom-next-prev-post a.custom-post-next{
+    text-align: right;
+    right: 0;
+    {{ borderRadius("2px 0px 0px 2px") }}
+}
+.custom-next-prev-post i:before{
+    font-size: 24px;
+    font-family: "entypo-fontello";
+    height: 22px;
+    line-height: 22px;
+    margin-top: -11px;
+    position: absolute;
+    top: 50%;
+    font-style: normal;
+    {{ transition("all 0.3s ease-out 0s") }}
+}
+.custom-next-prev-post i.icon-left-arrow:before{
+    content:"";
+    left: 10px;
+}
+.custom-next-prev-post i.icon-right-arrow:before{
+    content:"";
+    right: 10px;
+}
+.custom-next-prev-post .post-info-wrapper{
+    display: block;
+    overflow: hidden;
+    width: 1px;
+    {{ transition("all 0.3s ease-out 0s") }}
+}
+.custom-next-prev-post a:hover .post-info-wrapper{
+    width: 240px;
+}
+.custom-next-prev-post .post-info-wrapper .post-info{
+    display: table;
+    height: 80px;
+    width: 220px;
+    {{ transition("all 0.3s ease-out 0s") }}
+}
+.custom-next-prev-post a.custom-post-prev .post-info-wrapper .post-info{
+    margin: 0 1px 0 20px;
+}
+.custom-next-prev-post a.custom-post-next .post-info-wrapper .post-info{
+    margin: 0 20px 0 1px;
+}
+.custom-next-prev-post  .post-info-wrapper .post-info span{
+    display: table-cell;
+    font-size: 13px;
+    line-height: 1.65em;
+    vertical-align: middle;
+    {{ transition("all 0.3s ease-out 0s") }}
+}
+.custom-next-prev-post  .post-info-wrapper .post-info .post-image{
+    height: 80px;
+    width: 80px;
+}
+.custom-next-prev-post  .post-info-wrapper .post-info .post-image img{
+    {{ borderRadius("100px") }}
+    height: auto;
+    image-rendering: optimizequality;
+    margin: 0;
+    max-width: 100%;
+    padding: 0;
+    display: block;
+}
+/** 
+ * Blog Author Page 
+ *
+ * ALWAYS be sure to set styles to these selectors, as the COS does not provide default styles
+ */
+
+.hs-author-profile {}
+.hs-author-profile h2.hs-author-name {}
+.hs-author-profile .hs-author-bio {}
+.hs-author-profile .hs-author-avatar {}
+.hs-author-profile .hs-author-avatar img {}
+h3.hs-author-listing-header {}
+
+/** 
+ * Blog All Posts Page
+ *
+ * ALWAYS be sure to set styles to these selectors, as the COS does not provide default styles
+ */
+
+body.hs-content-path-blog-all {}
+div.post-listing-simple {}
+div.post-listing-simple .post-item {}
+h2.post-listing-simple {}
+h2.post-listing-simple a {}
+
+
+/* Blog Sidebar
+   ========================================================================== */
+
+.blog .blog-sidebar {
+    box-sizing: content-box;
+    margin-left: 0;
+    min-height: 1px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    width: 25%;
+    z-index: 1;
+}
+
+/* Blog Modules */
+.blog .blog-sidebar .widget-span {
+    clear: both;
+    float: none;
+    padding: 30px 0 30px 50px;
+    position: relative;
+}
+.blog .blog-sidebar .widget-span.custom-recent-posts{
+    padding-top:0;
+}
+.blog .blog-sidebar .widget-span.custom-recent-posts ul li{
+    display: block;
+    font-size: 11px;
+    line-height: 1.5em;
+    padding: 7px 0;
+    border-top: 3px solid #e1e1e1;
+}
+.blog .blog-sidebar .widget-span.custom-recent-posts ul li:first-child{
+    border-top: 0;
+}
+.blog .blog-sidebar .widget-span.custom-recent-posts ul li a{
+    font-family: "Georgia","Times New Roman",Helvetica,Arial,sans-serif;
+    font-style: italic;
+}
+.blog .blog-sidebar .widget-type-google_search input[type="text"]{
+    margin: 0;
+    padding: 11px 47px 11px 5px;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    {{ boxShadow("none") }}
+}
+.blog .blog-sidebar .widget-type-google_search label{
+    display:none;
+}
+.blog .blog-sidebar .widget-type-google_search .field{
+    position:relative;
+}
+.blog .blog-sidebar .widget-type-google_search .hs-button.primary{
+    height: 39px;
+    line-height: 40px;
+    margin: 0;
+    min-width: 40px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    z-index: 2;
+    {{ borderRadius("0") }}
+    color: #ffffff;
+    font-size: 17px;
+    text-align: center;
+}
+.blog .blog-sidebar .widget-type-google_search .hs-button.primary:before{
+    content:"";
+    font-family: "entypo-fontello";
+}
+    
+.blog-sidebar h1,
+.blog-sidebar h2,
+.blog-sidebar h3,
+.blog-sidebar h3.form-title{
+    color: #2b2b2b;
+    font-size: 1.1em;
+    font-family: "Lato",Verdana,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.1em;
+    margin: 0 0 8px;
+}
+
+.blog-sidebar ul{
+    display:block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style:none;
+}
+.blog-sidebar ul li{
+    margin :0;
+    padding:0;
+    clear: both;
+}
+.blog-sidebar ul li a {
+    color: #2b2b2b;
+    outline: 0 none;
+    text-decoration: none;
+}
+.blog-sidebar ul li a:hover {
+    color: #f6963d;
+    text-decoration: underline;
+}
+
+form ul{
+    list-style:none !important;
+	padding-left:0;
+}
+
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+
+/* All Global Forms
+   ========================================================================== */
+
+/* Form Field */
+body .hs-form-field {}
+
+/* Descriptions */
+body .hs-field-desc {}
+
+/* Labels */
+body label {
+    font-size: 12px;
+    line-height: 1.3;
+    font-weight: 700;
+    display: block;
+    margin: 6px 0 7px;
+}
+body .hs-form-field > label {}
+
+/* One Line Inputs */
+body input[type="text"],
+body input[type="password"], 
+body input[type="datetime"], 
+body input[type="datetime-local"], 
+body input[type="date"], 
+body input[type="month"], 
+body input[type="time"], 
+body input[type="week"], 
+body input[type="number"], 
+body input[type="email"], 
+body input[type="url"], 
+body input[type="search"], 
+body input[type="tel"], 
+body input[type="color"],
+body input[type="file"],
+body textarea,
+body select {
+    width: 100%;
+    font-family: "HelveticaNeue","Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 400;
+    background-color: #f8f8f8;
+    border: 1px solid #e1e1e1;
+    color: #2b2b2b;
+    letter-spacing: normal;
+    display: block;
+    padding: 8px 6px;
+    text-indent: 0.25em;
+    margin:5px 0 13px;
+    outline: none;
+}
+
+body input[type="text"]:focus,
+body input[type="password"]:focus, 
+body input[type="datetime"]:focus, 
+body input[type="datetime-local"]:focus, 
+body input[type="date"]:focus, 
+body input[type="month"]:focus, 
+body input[type="time"]:focus, 
+body input[type="week"]:focus, 
+body input[type="number"]:focus, 
+body input[type="email"]:focus, 
+body input[type="url"]:focus, 
+body input[type="search"]:focus, 
+body input[type="tel"]:focus, 
+body input[type="color"]:focus,
+body input[type="file"]:focus,
+body textarea:focus,
+body select:focus {
+    {{ boxShadow("0 0 2px 0 rgba(0, 0, 0, 0.2)") }}
+}
+
+/* Separate Styles for Multiple Line Inputs */
+body textarea {}
+body textarea:focus {}
+
+/* Separate Styles for Drop Downs */
+body select {}
+body select:focus {}
+
+/* Multiple Selection Inputs */
+body form.hs-form .hs-form-field ul.inputs-list {
+  list-style: none;
+  padding: 0;
+  margin-left:0;
+}
+body form.hs-form .hs-form-field ul.inputs-list li{
+    margin-left:0;
+}
+body form.hs-form .hs-form-field ul.inputs-list li input {
+    vertical-align: middle;
+}
+body input[type="radio"] {}
+body input[type="checkbox"] {}
+
+/* Required */
+body input:focus:required:invalid, 
+body textarea:focus:required:invalid, 
+body select:focus:required:invalid {}
+
+body input:focus:required:invalid:focus, 
+body textarea:focus:required:invalid:focus, 
+body select:focus:required:invalid:focus {}
+
+/* Placeholder Text */
+::-webkit-input-placeholder { /* Webkit Browsers */
+   color: #2b2b2b;
+   opacity: 1;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: #2b2b2b;
+   opacity: 1;
+}
+::-moz-placeholder { /* Firefox 19+ */
+   color: #2b2b2b;
+   opacity: 1;
+}
+:-ms-input-placeholder { /* IE10 */
+   color: #2b2b2b;
+   opacity: 1;
+}
+
+
+/* Form Module
+   ========================================================================== */
+
+/* Form Field */
+.hs_cos_wrapper_type_form .hs-form-field {}
+
+/* Descriptions */
+.hs_cos_wrapper_type_form .hs-field-desc {}
+
+/* Labels */
+.hs_cos_wrapper_type_form label {}
+.hs_cos_wrapper_type_form .hs-form-field > label {}
+
+/* One Line Inputs */
+.hs_cos_wrapper_type_form input[type="text"],
+.hs_cos_wrapper_type_form input[type="password"], 
+.hs_cos_wrapper_type_form input[type="datetime"], 
+.hs_cos_wrapper_type_form input[type="datetime-local"], 
+.hs_cos_wrapper_type_form input[type="date"], 
+.hs_cos_wrapper_type_form input[type="month"], 
+.hs_cos_wrapper_type_form input[type="time"], 
+.hs_cos_wrapper_type_form input[type="week"], 
+.hs_cos_wrapper_type_form input[type="number"], 
+.hs_cos_wrapper_type_form input[type="email"], 
+.hs_cos_wrapper_type_form input[type="url"], 
+.hs_cos_wrapper_type_form input[type="search"], 
+.hs_cos_wrapper_type_form input[type="tel"], 
+.hs_cos_wrapper_type_form input[type="color"],
+.hs_cos_wrapper_type_form input[type="file"],
+.hs_cos_wrapper_type_form textarea,
+.hs_cos_wrapper_type_form select {}
+
+.hs_cos_wrapper_type_form input[type="text"]:focus,
+.hs_cos_wrapper_type_form input[type="password"]:focus, 
+.hs_cos_wrapper_type_form input[type="datetime"]:focus, 
+.hs_cos_wrapper_type_form input[type="datetime-local"]:focus, 
+.hs_cos_wrapper_type_form input[type="date"]:focus, 
+.hs_cos_wrapper_type_form input[type="month"]:focus, 
+.hs_cos_wrapper_type_form input[type="time"]:focus, 
+.hs_cos_wrapper_type_form input[type="week"]:focus, 
+.hs_cos_wrapper_type_form input[type="number"]:focus, 
+.hs_cos_wrapper_type_form input[type="email"]:focus, 
+.hs_cos_wrapper_type_form input[type="url"]:focus, 
+.hs_cos_wrapper_type_form input[type="search"]:focus, 
+.hs_cos_wrapper_type_form input[type="tel"]:focus, 
+.hs_cos_wrapper_type_form input[type="color"]:focus,
+.hs_cos_wrapper_type_form input[type="file"]:focus,
+.hs_cos_wrapper_type_form textarea:focus,
+.hs_cos_wrapper_type_form select:focus {}
+
+/* Separate Styles for Multiple Line Inputs */
+.hs_cos_wrapper_type_form textarea {}
+.hs_cos_wrapper_type_form textarea:focus {}
+
+/* Separate Styles for Drop Downs */
+.hs_cos_wrapper_type_form select {}
+.hs_cos_wrapper_type_form select:focus {}
+
+/* Multiple Selection Inputs */
+.hs_cos_wrapper_type_form form.hs-form .hs-form-field ul.inputs-list li input {}
+.hs_cos_wrapper_type_form input[type="radio"] {}
+.hs_cos_wrapper_type_form input[type="checkbox"] {}
+
+
+/* Blog Comment Form
+   ========================================================================== */
+
+/* Label */
+#comment-form .hs-form-field > label {}
+#comment-form label {}
+
+/* Inputs */
+#comment-form input[type="text"] {}
+#comment-form input[type="text"]:focus {}
+
+#comment-form textarea {}
+#comment-form textarea:focus {}
+
+#comment-form input[type="checkbox"] {}
+
+/* Error */
+body .hs-common-error-message {}
+
+
+/* Blog Subscription Form
+   ========================================================================== */
+
+/* Label */
+#hs_form_target_blog_subscription .hs-form-field > label {}
+#hs_form_target_blog_subscription label {}
+
+/* Inputs */
+#hs_form_target_blog_subscription input[type="email"] {}
+#hs_form_target_blog_subscription input[type="email"]:focus {}
+
+#hs_form_target_blog_subscription input[type="radio"], #hs_form_target_blog_subscription input[type="checkbox"] {
+width: auto;
+margin-right: 10px;
+}
+
+
+/* Google Search Form
+   ========================================================================== */
+
+/* Label */
+.widget-type-google_search label {}
+
+/* Input */
+.widget-type-google_search input[type="text"] {}
+.widget-type-google_search input[type="focus"] {}
+
+
+/* Multi Column Form
+   ========================================================================== */
+
+body .hs-form fieldset.form-columns-1 {}
+body .hs-form fieldset.form-columns-1 .hs-form-field {}
+
+body .hs-form fieldset.form-columns-2 {}
+body .hs-form fieldset.form-columns-2 .hs-form-field {}
+
+body .hs-form fieldset.form-columns-3 {}
+body .hs-form fieldset.form-columns-3 .hs-form-field {}
+
+/* Multiple Selection Inputs */
+body form.hs-form .hs-form-field ul.inputs-list li input {}
+body input[type="radio"] {}
+body input[type="checkbox"] {}
+body form.hs-form fieldset { max-width: none; }
+body form.hs-form fieldset .hs-form-field { padding: 0 10px 0 0; }
+body form.hs-form fieldset[class*="form-columns"] .input { margin-right: 0; }
+body form.hs-form fieldset[class*="form-columns"] .hs-input { width: 100%; }
+body form.hs-form fieldset[class*="form-columns"] .hs-input[type="checkbox"] { width: auto; }
+body form.hs-form fieldset.form-columns-3 .hs-form-field { width: 33.33%; }
+
+@media (max-width: 400px) {
+  body form.hs-form fieldset .hs-form-field { padding: 0; }
+  body form.hs-form fieldset.form-columns-3 .hs-form-field,
+  body form.hs-form .form-columns-2 .hs-form-field .hs-input, 
+  body form.hs-form .form-columns-3 .hs-form-field .hs-input { width: 100%; }
+  body form.hs-form .form-columns-3 .hs-form-field .hs-input[type="checkbox"] { width: auto; }
+}
+
+
+
+
+/* ==========================================================================
+   Buttons                                              
+   ========================================================================== */
+
+
+/* All Global Buttons (Excluding CTAs)
+   ========================================================================== */
+
+body .hs-button.primary,
+body input[type="submit"],
+body input[type="button"] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    color: #ffffff;
+    font-family: "MS Shell Dlg", Arial;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
+    text-decoration: none !important;
+    background-color: #f6963d;
+    border: 0;
+    padding: 9px 22px;
+    {{ transition("all 0.3s ease-out 0s") }}
+    display: inline-block;
+    margin: 14px 0;
+}
+
+body .hs-button.primary:hover,
+body input[type="submit"]:hover,
+body input[type="button"]:hover {}
+
+body .hs-button.primary:focus,
+body input[type="submit"]:focus,
+body input[type="button"]:focus {}
+
+
+/* Form Module Button
+   ========================================================================== */
+
+.hs_cos_wrapper_type_form .hs-button.primary.large {}
+.hs_cos_wrapper_type_form .hs-button.primary.large:hover {}
+.hs_cos_wrapper_type_form .hs-button.primary.large:focus {}
+
+
+/* Blog Comment Button
+   ========================================================================== */
+#add-comment-button.hs-button.primary {}
+#add-comment-button.hs-button.primary:hover {}
+#add-comment-button.hs-button.primary:focus {}
+
+
+/* Blog Subscription Button
+   ========================================================================== */
+#hs_form_target_blog_subscription .hs-button.primary.large {}
+#hs_form_target_blog_subscription .hs-button.primary.large:hover {}
+#hs_form_target_blog_subscription .hs-button.primary.large:focus {}
+
+
+/* Google Search Button
+   ========================================================================== */
+.widget-type-google_search .hs-button.primary {}
+.widget-type-google_search .hs-button.primary:hover {}
+.widget-type-google_search .hs-button.primary:focus {}
+
+
+/* CTA Buttons
+   ========================================================================== */
+
+/** 
+ * Override global CTA styles by wrapping the CTA module in a module group 
+ * that has an ID, and use that ID to prefix your CTA selector. Example shown below.
+ *
+ * All overriding properties require !important tags. 
+*/
+#module-group-ID .cta_button {}
+#module-group-ID .cta_button:hover {}
+#module-group-ID .cta_button:focus {}
+
+
+
+
+
+
+
+
+/* ==========================================================================
+
+
+   6. MISCELLANOUS                                        
+
+
+   ========================================================================== */
+
+.error-template.one-column .body-container .hs-input,
+.password-template.one-column  .body-container .hs-input,
+.landing-page.one-column  .body-container .hs-input, 
+.site-page.one-column  .body-container .hs-input,
+.one-column  .body-container .widget-type-google_search input[type="text"],
+.password-template.one-column  .body-container  #hs-pwd-widget-password{
+    width: 50%;
+	display:block;    
+}
+.widget-type-email_subscriptions h1, 
+.widget-type-email_simple_subscription h1 {
+    color: #2b2b2b;
+    font-family: "Francois One",'Lato', Verdana, Helvetica, Arial, sans-serif !important;
+    font-size: 36px !important ;
+    line-height: 1.1em !important;
+    font-weight: 400 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    margin: 0 0 14px !important;
+}
+.widget-type-email_subscriptions h2,
+.widget-type-email_subscriptions_confirmation h2{
+    color: #2b2b2b !important;
+    font-family: "Lato","HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size: 28px !important;
+    line-height: 1.1em !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin: 0 0 10px !important;
+}
+
+
+
+/** 
+ * Styles that do not fit into available sections above can go here.
+ * For example, one would place 3rd party plugin overriding styles here.
+ *
+ * This section is NOT for 'Custom' styles.  All custom styles must go in the
+ * proper sections above.
+ *
+ * For instance, custom header and footer styles must go in the HEADER and 
+ * FOOTER sections.  Custom styles for anything in-between the header and footer 
+ * (such as, styles that are unique to the HOMEPAGE only), must go in the 
+ * CONTENT section.
+*/ 
+
+
+
+
+
+
+
+
+/* ==========================================================================
+
+
+   7. MOBILE MEDIA QUERIES                              
+
+
+   ========================================================================== */
+
+
+
+   
+
+/* Screen sizes smaller than site maxWidth (.page-center)
+   ========================================================================== */
+
+@media (max-width: {{maxWidth}}) {}
+
+
+@media (max-width: 849px) and (min-width:768px) {
+    .custom-menu-primary .hs-menu-wrapper > ul{
+        margin-left: -20px;
+    }
+    .custom-menu-primary .hs-menu-wrapper > ul > li > a{
+        padding: 0 10px;
+    }
+}
+/* Landscape tablet and smaller devices
+   ========================================================================== */
+
+@media (max-width: 767px) {
+    .error-template.one-column .body-container .hs-input,
+    .password-template.one-column  .body-container .hs-input,
+    .landing-page.one-column  .body-container .hs-input, 
+    .site-page.one-column  .body-container .hs-input,
+    .one-column  .body-container .widget-type-google_search input[type="text"],
+    .password-template.one-column  .body-container  #hs-pwd-widget-password{
+        width: 100%;
+        display:block;    
+    }
+    .blog .blog-content {
+        border: 0 none;
+        margin: 0 0 20px;
+        width: 100%;
+    }
+    #hubspot-author_data {
+        display: none;
+    }
+    .blog-listing-wrapper .post-listing .post-item .post-body {
+        padding-right: 0;
+    }
+    .blog-post-wrapper .post-body{
+        padding-right: 0;
+    }
+    .custom-author-timeline{
+        display:none;
+    }
+    .custom-post-divider{
+        margin: 0 0 30px;
+        padding: 30px 0 0;
+    }
+    .blog .blog-sidebar{
+        width:100%;
+        padding: 0 0 20px;
+    }
+    .blog .blog-sidebar .widget-span{
+        padding-left:0;
+    }
+    .hs-featured-image-wrapper {
+        display: block;
+        padding: 0 0 10px;
+    }
+    .custom-next-prev-post.widget-span{
+        display:none;
+    }
+    .body-container .main-content,
+    .body-container .sidebar{
+		margin-bottom: 20px;
+	}
+    
+    .container-fluid .row-fluid .page-center{
+        max-width: 85%;
+    }
+    .header-container .page-center, 
+    .body-container .page-center,
+    .footer-container .page-center{
+        padding-left:0;
+        padding-right:0;
+    }
+    .custom-header-container{
+        position: static;
+    }
+    .custom-logo a img{
+        margin-top: 2px;
+        vertical-align: middle;
+    }
+    .custom-twitter-widget .twitter-timeline.twitter-timeline-rendered {
+        max-width: 472px !important;
+        width: 100% !important;
+    }
+    .widget-span.footer-top-block1,
+    .widget-span.footer-top-block2,
+    .widget-span.footer-top-block3{
+        margin-bottom: 20px;
+    }
+    .custom-copyright.widget-span{
+        float: left;
+        width: auto;
+    }
+    .custom-footer-social-icons.widget-span{
+        float: right;
+        width: auto;
+    }
+}
+     
+
+/* Landscape phones and smaller devices
+   ========================================================================== */
+
+@media (max-width: 479px) {}
